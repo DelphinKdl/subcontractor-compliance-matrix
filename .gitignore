@@ -1,0 +1,6 @@
+.venv/
+.devin/
+__pycache__/
+*.pyc
+.pytest_cache/
+project3-compliance-build-brief.md
