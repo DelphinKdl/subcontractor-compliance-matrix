@@ -1,12 +1,11 @@
 # Subcontractor Document and Insurance Compliance Matrix
 
-A small tool I built to prepare for a Field Engineer / Safety Engineer
-career fair conversation. I don't have field experience, so instead of
-guessing at what compliance tracking is actually like on a jobsite, I
-built a small version of it myself: a prototype that tracks
-subcontractor insurance and safety certification expirations and flags
-anything expiring soon or already lapsed, before it becomes a liability
-on the jobsite.
+A Streamlit prototype that tracks subcontractor insurance and safety
+certification expirations and flags anything expiring soon or already
+lapsed, before it becomes a liability on the jobsite. I don't have
+construction field experience, so I built a small, working version of
+this compliance-tracking problem myself to understand how it actually
+works.
 
 ## Problem
 
@@ -21,37 +20,37 @@ is a real administrative bottleneck for site engineers.
 
 I designed and built this end to end: the data model, the seed data, the
 status logic, and the Streamlit interface. This is a solo prototype, not
-a team project, built specifically to learn how compliance tracking
-works on a jobsite by building a small version of it myself.
+a team project.
 
 ## The Data
 
-All data is synthetic. `seed_db.py` generates 50 mock subcontractor
-profiles across common construction trades, each with 2 to 3 documents
-(General Liability Insurance, Workers' Compensation, and sometimes a
-Safety Certification), with expiration dates spread across compliant,
-expiring soon, and expired states so the demo shows real variety
-immediately. The seed uses a fixed random seed so the data set is
-reproducible. No real subcontractors, projects, or people are represented
-anywhere in this app.
+All data is synthetic: 50 mock subcontractor profiles across common
+construction trades, each with 2 to 3 documents (General Liability
+Insurance, Workers' Compensation, and sometimes a Safety Certification).
+Expiration dates are spread across compliant, expiring soon, and expired
+so the demo shows real variety right away instead of a wall of green.
+The data set generates the same way every time, so it's easy to retest.
+No real subcontractors, projects, or people are represented anywhere in
+this app.
 
 ## Tools and Techniques
 
 - Python and SQLite for the data layer
 - Streamlit for the interface
-- Status computed live from `expiration_date` vs. the current date,
-  never stored, so the matrix is always accurate to today
+- Status computed live from each document's expiration date vs. the
+  current date, never stored, so the matrix is always accurate to today
 - Streamlit's `AppTest` framework for automated end-to-end verification
 
 ## The Process
 
-1. Defined the schema (`subcontractors`, `documents`) and wrote the seed
-   script first, before any UI, so there was real data to build against.
-2. Wrote the status logic as a standalone function (`status.py`) and
-   hand-checked the exact boundary cases before touching the UI.
+1. Defined what a subcontractor and a document record needed to look
+   like, and built the data generator first, before any interface, so
+   there was real data to build against from the start.
+2. Wrote the status logic as its own isolated piece and hand-checked the
+   exact boundary cases before touching the interface.
 3. Built the matrix view, then the summary stats, then the subcontractor
    detail view and alert draft feature, in that order.
-4. Wrote `AppTest` coverage for the full flow: load the app, filter to
+4. Wrote automated tests covering the full flow: load the app, filter to
    red and yellow, select a subcontractor, generate a draft alert.
 
 ## Key Insights
@@ -106,6 +105,3 @@ python3 seed_db.py
 streamlit run app.py
 ```
 
-Runs fully offline: local SQLite file, no external database, no real
-email service. Any "Generate Alert Draft" output is a draft shown in the
-UI only and is never sent.
