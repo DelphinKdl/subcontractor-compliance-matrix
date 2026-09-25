@@ -7,6 +7,11 @@ construction field experience, so I built a small, working version of
 this compliance-tracking problem myself to understand how it actually
 works.
 
+## Screenshots
+
+
+![Subcontractor detail and draft alert](images/detail-view.png)
+
 ## Problem
 
 General contractors carry financial and legal liability if a
