@@ -9,8 +9,7 @@ works.
 
 ## Screenshots
 
-
-![Subcontractor detail and draft alert](images/detail-view.png)
+![Compliance matrix with subcontractor detail and draft alert](images/detail-view.png)
 
 ## Problem
 
